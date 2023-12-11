@@ -1,0 +1,11 @@
+
+Projet bibliothèque Guinot
+Cette application utilise la version 8.1 de PHP ainsi que la version 6.1 de symfony.
+Pour lancer le l’application Guinot :
+Il faut installer symfony.
+Après avoir installé symfony.
+Vous pouvez maintenant installer le projet grâce à la commande git clone.
+L’application est installée !
+Faites composer update pour bénéficier pleinement des dépendances nécessaires au bon fonctionnement de l’application.
+•	Installer la base de donnée. Utiliser la commande symfony console d:d:c. Vous aurez le message suivant : la base de donnée a été créé. Faites d:s:u –force pour copier le schémas de la base de donnée en local. Faites la migration de la base de donnée en faisant php bin/console make :migration puis doctrine :migrations :migrate à la suite de la dernière commande, vous aurez un message faites yes. Vous venez de réaliser la migration des données.
+•	Fixtures, pour récupérer les données issu du jeu de donnée, faites d :f :l, un message vous demandera de confirmer si vous voulez purger la base de donnée, répondez yes.
