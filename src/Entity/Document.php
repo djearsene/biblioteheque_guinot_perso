@@ -40,11 +40,11 @@ class Document
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $releasedate = null;
 
-    
+
     #[ORM\OneToMany(mappedBy: 'document', targetEntity: Borrow::class)]
     private Collection $borrows;
 
-    #[ORM\OneToMany(mappedBy: 'document', targetEntity: Images::class, cascade:["persist"], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'document', targetEntity: Images::class, cascade: ["persist"], orphanRemoval: true)]
     private Collection $images;
 
     public function __construct()
@@ -154,9 +154,9 @@ class Document
         return $this;
     }
 
-        /**
-         * @return Collection<int, Borrow>
-         */
+    /**
+     * @return Collection<int, Borrow>
+     */
     public function getBorrows(): Collection
     {
         return $this->borrows;

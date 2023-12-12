@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Images;
 use App\Entity\Document;
+use App\Entity\Genre;
 use App\Form\DocumentType;
 use App\Repository\DocumentRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,8 +20,9 @@ class DocumentController extends AbstractController
     public function index(DocumentRepository $documentRepository): Response
     {
         return $this->render(
-            'document/index.html.twig', [
-            'documents' => $documentRepository->findAll(),
+            'document/index.html.twig',
+            [
+                'documents' => $documentRepository->findAll(),
             ]
         );
     }
@@ -62,8 +64,10 @@ class DocumentController extends AbstractController
             return $this->redirectToRoute('app_document_index', ['id' => $document->getId()]);
         }
 
-        return $this->render('document/new.html.twig', [
-            'formDocument' => $form->createView(),
+        return $this->render(
+            'document/new.html.twig',
+            [
+                'formDocument' => $form->createView(),
             ]
         );
     }
@@ -72,8 +76,9 @@ class DocumentController extends AbstractController
     public function show(Document $document): Response
     {
         return $this->render(
-            'document/show.html.twig', [
-            'document' => $document,
+            'document/show.html.twig',
+            [
+                'document' => $document,
             ]
         );
     }
@@ -91,9 +96,10 @@ class DocumentController extends AbstractController
         }
 
         return $this->renderForm(
-            'document/edit.html.twig', [
-            'document' => $document,
-            'form' => $form,
+            'document/edit.html.twig',
+            [
+                'document' => $document,
+                'form' => $form,
             ]
         );
     }
@@ -101,11 +107,26 @@ class DocumentController extends AbstractController
     #[Route('/{id}', name: 'app_document_delete', methods: ['POST'])]
     public function delete(Request $request, Document $document, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$document->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $document->getId(), $request->request->get('_token'))) {
             $entityManager->remove($document);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_document_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    // Afficher les documents de la  Genre roman
+    #[Route('/document-genre', name: 'documents.genre.roman')]
+    public function indexDocumentsgenre_roman(DocumentRepository $documentRepository, Request $request)
+    {
+        $documents = $documentRepository->findByGenreroman();
+        // Appel de la page pour affichage
+        return $this->render(
+            'document/genre.html.twig',
+            [
+                // passage du contenu de $location
+                'documents' => $documents,
+            ]
+        );
     }
 }
